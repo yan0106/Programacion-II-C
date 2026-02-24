@@ -20,4 +20,13 @@ void apila(int e) {
     }
 }
 
-
+int desapila() {
+    if (estaVacia()) { // verifico si la cola está vacía
+        printf("Error: pila vacía");
+        return 1; // hubo un error, el array está vacío
+    } else {
+        int elem = elementos[cima]; // 1. Leo el elemento
+        cima = cima -1; // 2. Bajo cima
+        return elem; // 3. retorno el elemento eliminado
+    } 
+}
