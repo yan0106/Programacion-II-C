@@ -1,18 +1,23 @@
 #include <stdio.h>
-#define CAPACIDAD 15
+#include "PilaArray.h"
 
-void apila(int); // 
-int desapila();
-void vaciaPila();
-int tamaño();
-int estaVacia();
-int cima();
+// variables globales
+int elementos [CAPACIDAD];
+int cima = -1; // posición del último elem del array
 
 int main () {
 
-    int elementos [CAPACIDAD];
-    int cima = -1;
 
-
-
+    return 0;
 }
+
+void apila(int e) {
+    if (cima == CAPACIDAD - 1) {
+        printf ("Error: no caben más elementos");
+    } else {
+        cima = cima + 1; // cima = posición 0 
+        elementos[cima] = e; // en la posición 0 agrega e
+    }
+}
+
+
