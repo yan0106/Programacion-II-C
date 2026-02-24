@@ -16,6 +16,7 @@ int cima = -1; // posición del último elem del array
 
 int main () {
 
+    // Armar código de main para probar la Pila
 
     return 0;
 }
