@@ -1,3 +1,12 @@
+// Pila TDA (con arrays)
+// LIFO
+
+/*El orden de las operaciones:
+- Al apilar, primero incrementar el índice y luego guardar el dato.
+- Al desapilar, primero capturar el dato y luego decrementar el índice. 
+Las precondiciones: No olvidar las validaciones de "Pila Llena" (Overflow) y 
+"Pila Vacía" (Underflow) antes de mover el índice */
+
 #include <stdio.h>
 #include "PilaArray.h"
 
@@ -30,3 +39,24 @@ int desapila() {
         return elem; // 3. retorno el elemento eliminado
     } 
 }
+
+void vaciaPila() {
+    cima = -1;
+}
+
+int tamaño() {
+    return cima+1;
+}
+
+/* int estaVacia(){
+    if (cima == -1){
+        return 1; // verdadero
+    } else {
+        return 0; // falso
+    }
+}*/
+
+int estaVacia() {
+    return cima == -1; // si se cumple retorna 1, sino retorna 0
+}
+
