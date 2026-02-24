@@ -31,8 +31,7 @@ void apila(int e) {
 
 int desapila() {
     if (estaVacia()) { // verifico si la cola está vacía
-        printf("Error: pila vacía");
-        return 1; // hubo un error, el array está vacío
+        return -1; // hubo un error, el array está vacío
     } else {
         int elem = elementos[cima]; // 1. Leo el elemento
         cima = cima -1; // 2. Bajo cima
@@ -60,3 +59,10 @@ int estaVacia() {
     return cima == -1; // si se cumple retorna 1, sino retorna 0
 }
 
+int obtenerCima() {
+    if (estaVacia()) {
+        return -1;
+    } else {
+        return elementos[cima] ;
+    }
+}

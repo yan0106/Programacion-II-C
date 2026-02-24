@@ -11,5 +11,5 @@ int desapila(); // elimina y retorna el primer elemento
 void vaciaPila(); // vacía la pila (pasa a tener tamaño 0)
 int tamaño(); // da la  cantidad de elementos que posee la pila
 int estaVacia(); // indica si la pila tiene o no elementos
-int cima(); // retorna el primer elemento pero no lo elimina
+int obtenerCima(); // retorna el primer elemento pero no lo elimina
 
