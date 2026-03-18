@@ -8,7 +8,7 @@ Las precondiciones: No olvidar las validaciones de "Pila Llena" (Overflow) y
 "Pila Vacía" (Underflow) antes de mover el índice */
 
 #include <stdio.h>
-#include "PilaArray.h"
+#include "Pila-Array.h"
 
 // variables globales
 int elementos [CAPACIDAD];
