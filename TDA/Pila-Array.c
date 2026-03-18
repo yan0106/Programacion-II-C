@@ -32,7 +32,6 @@ int main () {
     for (int i = 0; i < CAPACIDAD; i ++) {
         printf ("%d\n", elementos[i]);
     }
-    // Armar código de main para probar la Pila
 
     return 0;
 }
