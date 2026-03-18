@@ -14,8 +14,24 @@ Las precondiciones: No olvidar las validaciones de "Pila Llena" (Overflow) y
 int elementos [CAPACIDAD];
 int cima = -1; // posición del último elem del array
 
-int main () {
+int main () { 
 
+    apila(10);
+    apila(20);
+    apila(30);
+
+    printf("Cima: %d\n", obtenerCima());
+    printf("Tamanio: %d\n", tamanio());
+
+    int x = desapila();
+    printf("Desapilado: %d\n", x);
+
+    printf("Nueva cima: %d\n", obtenerCima());
+
+    // mostrar elementos:
+    for (int i = 0; i < CAPACIDAD; i ++) {
+        printf ("%d\n", elementos[i]);
+    }
     // Armar código de main para probar la Pila
 
     return 0;
@@ -44,7 +60,7 @@ void vaciaPila() {
     cima = -1;
 }
 
-int tamaño() {
+int tamanio() {
     return cima+1;
 }
 
