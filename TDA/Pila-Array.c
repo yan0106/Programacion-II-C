@@ -18,7 +18,7 @@ int main () {
 
     apila(10);
     apila(20);
-    apila(30);
+    apila(30); // último en entrar, primero en salir
 
     printf("Cima: %d\n", obtenerCima());
     printf("Tamanio: %d\n", tamanio());
