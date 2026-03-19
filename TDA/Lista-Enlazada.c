@@ -14,6 +14,18 @@ int main () {
 void listar (lista * i) {
     if (i != NULL) {
         printf ("elemento:= %d\n", i->dato);
-        listar (i->sgte);
+        listar (i -> sgte);
     }
 }
+
+// con while:
+/*
+void listar (lista * i) {
+    while (i != NULL){
+        printf ("elemento:= %d\n", i->dato);
+        i = i -> sgte;
+    }
+}
+
+*/
+
