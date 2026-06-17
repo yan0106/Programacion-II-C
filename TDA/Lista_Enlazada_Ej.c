@@ -55,7 +55,7 @@ void eliminar(int d, lista **i) {
             (*i)->sgte = (*i)->sgte->sgte;
             free(aux);
         } else {
-            eliminar(d, &(*i)->sgte);
+            eliminar(d, &(*i)->sgte); // llama a eliminar de forma recursiva, pasándole el sig nodo
         }
     }
 }
