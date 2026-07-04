@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> // para usar la función malloc
-#define MAX 10
+#define MAX_PROCESOS 10
+#define TAM_ESTADO 10
 
 // -- Variable global --
 static int id = 0; // para incrementar la prioridad
@@ -10,12 +11,12 @@ typedef struct proceso{
     int procesador;
     int id_proceso;
     int prioridad;
-    char estado[MAX];
+    char estado[TAM_ESTADO];
 } proceso;
 
 // Arreglo estático de 10 posiciones de punteros a estructuras proceso. 
 // Reserva memoria para 10 punteros. Pone los 10 casilleros en NULL.
-proceso * scheduling[MAX] = {NULL};
+proceso * scheduling[MAX_PROCESOS] = {NULL};
 
 // --- Prototipo de funciones ---
 
@@ -46,7 +47,7 @@ return 0;
 void ingresaProceso() {
     static int posicion_actual = 0; // inicia con posición en 0
     int ingresado = 0; // bandera
-    for (int i = 0; i < MAX; i++) {
+    for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[posicion_actual] == NULL) {
             //1. si la posición es vacía, reserva memoria para el proceso
             scheduling[posicion_actual] = malloc(sizeof(struct proceso));
@@ -56,7 +57,7 @@ void ingresaProceso() {
             //3. incrementa la posición
             posicion_actual++;
             //4. chequea que no se pase de MAX
-            if (posicion_actual == MAX) {
+            if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0; // si posicion_actual llega a MAX, pega la vuelta a 0
             };
             //5. asigna 1 a la bandera
@@ -68,7 +69,7 @@ void ingresaProceso() {
             // próxima vuelta del for, revise el que sigue
             posicion_actual++;
             // vuelve a chequear que no se pase de MAX
-            if (posicion_actual == MAX) {
+            if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0;
             };
         };
