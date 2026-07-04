@@ -1,11 +1,10 @@
 #include <stdio.h>
 #define MAX 10
 
-// 0 1 2 3 4 5 6 7 8 9 
-
+// -- Variable global --
 static int id = 0; // Contador de prioridad
 
-/* Estructura proceso */
+// -- Estructura proceso -- 
 typedef struct proceso{
     int procesador;
     int id_proceso;
@@ -13,14 +12,36 @@ typedef struct proceso{
     char estado[MAX];
 } proceso;
 
-/* Arreglo estático de 10 posiciones de punteros a estructuras proceso. 
-Reserva memoria para 10 punteros. Pone los 10 casilleros en NULL */
+// Arreglo estático de 10 posiciones de punteros a estructuras proceso. 
+// Reserva memoria para 10 punteros. Pone los 10 casilleros en NULL.
 proceso * scheduling[MAX] = {NULL};
 
-/* Asigna el siguiente estado según el orden enunciado antes */
-void asignaEstado(proceso*);
+// --- Prototipo de funciones ---
 
-/* Ingresa el proceso al Scheduler en el primer espacio libre que encuentre*/
+// Asigna el siguiente estado según el orden enunciado
+void asignaEstado(proceso*);
+// Ingresa el proceso al Scheduler en el primer espacio libre que encuentre
+void ingresaProceso();
+// Quita el proceso de la cola liberando y retornando el lugar liberado
+int terminaProceso();
+// Recorrera todos los procesos de la cola, haciendo el cambio de estado de los mismos
+void recorreCola();
+// Lista los procesos de la cola
+void mostrarScheduler();
+// Lista los procesos registrados en el archivo
+void listarFile();
+
+// -- Main --
+
+int main () {
+
+
+
+return 0;    
+}
+
+// -- Desarrollo de funciones --
+
 void ingresaProceso() {
     static int posicion_actual = 0; // inicio con posición en 0
     int ingresado = 0; // bandera
@@ -57,11 +78,3 @@ void ingresaProceso() {
     };
 }
 
-/*Quita el proceso de la cola liberando y retornando el lugar liberado*/
-int terminaProceso();
-/*Recorrera todos los procesos de la cola, haciendo el cambio del estado de los mismos*/
-void recorreCola();
-/*Lista los procesos de la cola*/
-void mostrarScheduler();
-/*Lista los procesos registrados en el archivo*/
-void listarFile();
