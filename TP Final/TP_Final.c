@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> // para usar la función malloc
 #include <string.h> // para usar strcpy
+#include <time.h> // para usar time
 #define MAX_PROCESOS 10 // capacidad máxima de procesos
 #define TAM_ESTADO 10 // tamaño máximo del string para estado
 
@@ -37,6 +38,9 @@ void listarFile();
 // -- Main --
 
 int main () {
+
+    srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
+
     // al principio el arreglo está vacío (todo en NULL)
     
     // prueba ingresaProceso()
@@ -44,13 +48,14 @@ int main () {
     ingresaProceso(); // se guarda en scheduling[1]
     ingresaProceso(); // se guarda en scheduling[2]
 
-    // mostrarScheduler() para verlos en pantalla ...
+    // mostrarScheduler() para verlos en pantalla
+    mostrarScheduler();
 
 
-return 0;    
+return 0;  
 }
 
-// -- Desarrollo de funciones --
+// -- Desarrollo de las funciones --
 
 void ingresaProceso() {
     static int posicion_actual = 0; // inicia con posición en 0
@@ -62,8 +67,8 @@ void ingresaProceso() {
             //2. Asigna datos
             scheduling[posicion_actual]->procesador = 0;
             scheduling[posicion_actual]->id_proceso = rand();
+            id++; // (primero incrementa, pasa 1 la primera vez)
             scheduling[posicion_actual]->prioridad = id;
-            id++; // (se incrementa para el próximo proceso que se cree)
             strcpy(scheduling[posicion_actual]->estado, "Nuevo");            
             //3. Incrementa la posición
             posicion_actual++;
@@ -95,14 +100,15 @@ void mostrarScheduler() {
     printf ("-- Los procesos registrados son: -- \n");
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) { // verifica que la posición no esté vacía
-            printf("[%d] -> {%d; %d; %d; \"%s\"}\n", 
+            printf("[%d] -> {%d;%d;%d;\"%s\"}\n", 
                     i,
                     scheduling[i]->procesador, 
                     scheduling[i]->id_proceso, 
                     scheduling[i]->prioridad, 
                     scheduling[i]->estado); // 
         } else { // si está vacía
-            printf("[%d] -> [Vacío]\n", i);
+            printf("[%d] -> [Vacio]\n", i);
+        }
     }
-}
+};
 
