@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h> // para usar la función malloc
 #define MAX 10
 
 // -- Variable global --
-static int id = 0; // Contador de prioridad
+static int id = 0; // para incrementar la prioridad
 
 // -- Estructura proceso -- 
 typedef struct proceso{
@@ -43,7 +44,7 @@ return 0;
 // -- Desarrollo de funciones --
 
 void ingresaProceso() {
-    static int posicion_actual = 0; // inicio con posición en 0
+    static int posicion_actual = 0; // inicia con posición en 0
     int ingresado = 0; // bandera
     for (int i = 0; i < MAX; i++) {
         if (scheduling[posicion_actual] == NULL) {
