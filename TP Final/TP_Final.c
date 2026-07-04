@@ -87,7 +87,22 @@ void ingresaProceso() {
     };
     // Si salí del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
     if (ingresado == 0) {
-        printf ("No es posible ingresar el proceso. Scheduling lleno.\n");
+        printf ("No es posible ingresar el proceso. Scheduler lleno.\n");
     };
+}
+
+void mostrarScheduler() {
+    printf ("-- Los procesos registrados son: -- \n");
+    for (int i = 0; i < MAX_PROCESOS; i++) {
+        if (scheduling[i] != NULL) { // verifica que la posición no esté vacía
+            printf("[%d] -> {%d; %d; %d; \"%s\"}\n", 
+                    i,
+                    scheduling[i]->procesador, 
+                    scheduling[i]->id_proceso, 
+                    scheduling[i]->prioridad, 
+                    scheduling[i]->estado); // 
+        } else { // si está vacía
+            printf("[%d] -> [Vacío]\n", i);
+    }
 }
 
