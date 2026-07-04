@@ -37,7 +37,14 @@ void listarFile();
 // -- Main --
 
 int main () {
+    // al principio el arreglo está vacío (todo en NULL)
+    
+    // prueba ingresaProceso()
+    ingresaProceso(); // se guarda en scheduling[0]
+    ingresaProceso(); // se guarda en scheduling[1]
+    ingresaProceso(); // se guarda en scheduling[2]
 
+    // mostrarScheduler() para verlos en pantalla ...
 
 
 return 0;    
