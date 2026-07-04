@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h> // para usar la función malloc
-#define MAX_PROCESOS 10
-#define TAM_ESTADO 10
+#include <string.h> // para usar strcpy
+#define MAX_PROCESOS 10 // capacidad máxima de procesos
+#define TAM_ESTADO 10 // tamaño máximo del string para estado
 
 // -- Variable global --
 static int id = 0; // para incrementar la prioridad
@@ -49,20 +50,23 @@ void ingresaProceso() {
     int ingresado = 0; // bandera
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[posicion_actual] == NULL) {
-            //1. si la posición es vacía, reserva memoria para el proceso
+            //1. Si la posición es vacía, reserva memoria para el proceso
             scheduling[posicion_actual] = malloc(sizeof(struct proceso));
-
-            //2. asigna datos...(continuar)
-
-            //3. incrementa la posición
+            //2. Asigna datos
+            scheduling[posicion_actual]->procesador = 0;
+            scheduling[posicion_actual]->id_proceso = rand();
+            scheduling[posicion_actual]->prioridad = id;
+            id++; // (se incrementa para el próximo proceso que se cree)
+            strcpy(scheduling[posicion_actual]->estado, "Nuevo");            
+            //3. Incrementa la posición
             posicion_actual++;
-            //4. chequea que no se pase de MAX
+            //4. Chequea que no se pase de MAX
             if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0; // si posicion_actual llega a MAX, pega la vuelta a 0
             };
-            //5. asigna 1 a la bandera
+            //5. Asigna 1 a la bandera
             ingresado = 1;
-            //6. frena el bucle
+            //6. Frena el bucle
             break;
         } else {
             // si el casillero actual está ocupado, también avanza la posicion_actual para que en la 
@@ -74,7 +78,7 @@ void ingresaProceso() {
             };
         };
     };
-    // si salí del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
+    // Si salí del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
     if (ingresado == 0) {
         printf ("No es posible ingresar el proceso. Scheduling lleno.\n");
     };
