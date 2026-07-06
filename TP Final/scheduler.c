@@ -197,10 +197,11 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
                     // este proceso no está usando ningun procesador. Está afuera, esperando su turno en la fila
                     scheduling[i]->procesador = 0; 
                 }
-              // si no es "Nuevo" y no es el de mayor prioridad de "Esperando"
-            } else if (i != indice) {
-                asignaEstado(scheduling[i]); // delega el cambio de estado a la función 
-            } 
+            // Si el proceso está en "Esperando", no entra en asignaEstado()
+            // De esta forma los proc. "Esperando" no pierden su prioridad, la vuelta que sigue
+            } else if (strcmp(scheduling[i]->estado, "Esperando") != 0) {
+                asignaEstado(scheduling[i]); // solo entran los "Listo" y los "Corriendo" viejos
+            }
         }
     }
 }
