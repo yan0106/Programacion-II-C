@@ -159,9 +159,15 @@ void recorreCola () {
                     scheduling[i]->procesador = 2; // el procesador cambia a 2
                     procesador2 = 1; // el procesador está ocupado
                 }
-            } 
-             
+                else {
+                    // si ninguno de los procesadores está libre, el proceso pasa al estado "Listo"
+                    strcpy(scheduling[i]->estado, "Listo");
+                    // este proceso no está usando ningun procesador. Está afuera, esperando su turno en la fila
+                    scheduling[i]->procesador = 0; 
+                }
+            } else { // si el proceso tiene cualquier otro estado != "Nuevo", delega a la f  
+                asignaEstado (scheduling[i]);
+            }         
         }
     }
-
 }
