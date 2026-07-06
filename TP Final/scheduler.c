@@ -130,3 +130,7 @@ void asignaEstado (proceso * p) {
         strcpy (p->estado, "Terminado");
     }
 }
+
+void recorreCola () {
+    
+}
