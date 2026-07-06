@@ -118,21 +118,26 @@ void mostrarScheduler() {
     }
 };
 
-void asignaEstado (proceso * p) {
+// Listo -> Esperando ; Esperando -> Listo ; Corriendo -> Terminado
+void asignaEstado (proceso * p) { // se encarga de los procesos que no dependen de los procesadores
     if (strcmp(p->estado, "Listo") == 0) {
         strcpy (p->estado, "Esperando");
     } else if (strcmp(p->estado, "Esperando") == 0) {
-        strcpy (p->estado, "Listo"); // vuelve a la fila
+        strcpy (p->estado, "Listo"); // no consiguió procesador, vuelve a la fila
     } else if (strcmp(p->estado, "Corriendo") == 0) {
         strcpy (p->estado, "Terminado");
     }
 }
 
-void recorreCola () {
+// Nuevo -> Corriendo ; Esperando -> Corriendo
+void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesadores
     int procesador1 = 0; // 0 = libre ; 1 = ocupado
     int procesador2 = 0;
 
-    // 1. Chequeo quién ya está corriendo:
+    int minimo_prioridad = 9999; // para guardar la prioridad de los procesos "Esperando"
+    int indice = -1; // para saber el casillero
+
+    // 1. Chequeo quién ya está corriendo + prioridad minima de los "Esperando":
     for (int i = 0; i < MAX_PROCESOS; i++){
         if (scheduling[i] != NULL) {
             if (strcmp(scheduling[i]->estado, "Corriendo") == 0){
@@ -142,10 +147,30 @@ void recorreCola () {
                     procesador2 = 1; // el procesador 2 está ocupado
                 }
             }
+            if (strcmp(scheduling[i]->estado, "Esperando") == 0){
+                if (scheduling[i]->prioridad < minimo_prioridad){
+                    minimo_prioridad = scheduling[i]->prioridad;
+                    indice = i; // cuando termina el bucle, se queda con la posición del proc. de mayor prioridad
+                }
+            }
         }
     }
+
+    // 2. Lógica para procesos "Esperando"
+    if (indice != -1) { // si indice es distinto de -1, significa que encontró un proc. "Esperando"
+        if (procesador1 == 0){ // si el procesador 1 está libre
+            strcpy(scheduling[indice]->estado, "Corriendo"); // cambia el estado
+            scheduling[indice]->procesador = 1; // le asigna 1 al procesador
+            procesador1 = 1; // cambia a procesador ocupado
+        }
+        else if (procesador2 == 0){
+            strcpy(scheduling[indice]->estado, "Corriendo");
+            scheduling[indice]->procesador = 2;
+            procesador2 = 1;
+        }        
+    }
     
-    // 2. Recorrido principal: procesador1 libre; procesador2 libre; o todo lleno
+    // 2. Recorrido principal: procesador1 = libre; procesador2 = libre; o todo lleno
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) {
             if (strcmp(scheduling[i]->estado, "Nuevo") == 0 && scheduling[i]->procesador == 0) {
@@ -160,14 +185,14 @@ void recorreCola () {
                     procesador2 = 1; // el procesador está ocupado
                 }
                 else {
-                    // si ninguno de los procesadores está libre, el proceso pasa al estado "Listo"
+                    // si ninguno de los procesadores está libre, el proceso "Nuevo" pasa al estado "Listo"
                     strcpy(scheduling[i]->estado, "Listo");
                     // este proceso no está usando ningun procesador. Está afuera, esperando su turno en la fila
                     scheduling[i]->procesador = 0; 
                 }
-            } else { // si el proceso tiene cualquier otro estado != "Nuevo", delega a la f  
-                asignaEstado (scheduling[i]);
-            }         
+            } else if (i != indice) { // si no es "Nuevo" y no es el de mayor prioridad de "Esperando"
+                asignaEstado(scheduling[i]); // delega el cambio de estado a la función 
+            } 
         }
     }
 }
