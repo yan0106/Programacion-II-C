@@ -51,10 +51,16 @@ int main () {
     // mostrarScheduler() para verlos en pantalla
     mostrarScheduler();
 
-    // prueba asignaEstado()
-    strcpy(scheduling[0]->estado, "Listo");
-    asignaEstado(scheduling[0]);
-    printf ("Luego de llamar a la f asignaEstado: \n");
+    // llamada a recorreCola
+    recorreCola();
+    printf ("Luego de recorrer la cola: \n");
+    mostrarScheduler();
+
+    // simula terminarProceso()
+    scheduling[0] = NULL;
+    scheduling[1] = NULL;
+
+    recorreCola();
     mostrarScheduler();
 
 
@@ -157,7 +163,8 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
     }
 
     // 2. Lógica para procesos "Esperando"
-    if (indice != -1) { // si indice es distinto de -1, significa que encontró un proc. "Esperando"
+    // si indice es distinto de -1, significa que encontró un proc. "Esperando"
+    if (indice != -1) {
         if (procesador1 == 0){ // si el procesador 1 está libre
             strcpy(scheduling[indice]->estado, "Corriendo"); // cambia el estado
             scheduling[indice]->procesador = 1; // le asigna 1 al procesador
@@ -170,7 +177,7 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
         }        
     }
     
-    // 2. Recorrido principal: procesador1 = libre; procesador2 = libre; o todo lleno
+    // 3. Recorrido para "Nuevo" (procesador1 = libre; procesador2 = libre; o todo lleno)
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) {
             if (strcmp(scheduling[i]->estado, "Nuevo") == 0 && scheduling[i]->procesador == 0) {
@@ -190,7 +197,8 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
                     // este proceso no está usando ningun procesador. Está afuera, esperando su turno en la fila
                     scheduling[i]->procesador = 0; 
                 }
-            } else if (i != indice) { // si no es "Nuevo" y no es el de mayor prioridad de "Esperando"
+              // si no es "Nuevo" y no es el de mayor prioridad de "Esperando"
+            } else if (i != indice) {
                 asignaEstado(scheduling[i]); // delega el cambio de estado a la función 
             } 
         }
