@@ -119,9 +119,6 @@ void mostrarScheduler() {
 };
 
 void asignaEstado (proceso * p) {
-    /*if (strcmp(p->estado, "Nuevo") == 0) {
-        strcpy (p->estado, "Listo");
-    } VER */ 
     if (strcmp(p->estado, "Listo") == 0) {
         strcpy (p->estado, "Esperando");
     } else if (strcmp(p->estado, "Esperando") == 0) {
@@ -132,5 +129,39 @@ void asignaEstado (proceso * p) {
 }
 
 void recorreCola () {
+    int procesador1 = 0; // 0 = libre ; 1 = ocupado
+    int procesador2 = 0;
+
+    // 1. Chequeo quién ya está corriendo:
+    for (int i = 0; i < MAX_PROCESOS; i++){
+        if (scheduling[i] != NULL) {
+            if (strcmp(scheduling[i]->estado, "Corriendo") == 0){
+                if (scheduling[i]->procesador == 1) { // si el proceso está corriendo, tiene asignado el procesador1
+                    procesador1 = 1; // el procesador 1 está ocupado
+                } else if (scheduling[i]->procesador == 2) { // si el proceso está corr, si tiene asignado el procesador2
+                    procesador2 = 1; // el procesador 2 está ocupado
+                }
+            }
+        }
+    }
     
+    // 2. Recorrido principal: procesador1 libre; procesador2 libre; o todo lleno
+    for (int i = 0; i < MAX_PROCESOS; i++) {
+        if (scheduling[i] != NULL) {
+            if (strcmp(scheduling[i]->estado, "Nuevo") == 0 && scheduling[i]->procesador == 0) {
+                if (procesador1 == 0) { // si el procesador1 está libre
+                    strcpy(scheduling[i]->estado, "Corriendo"); // el proceso pasa de "Nuevo" a "Corriendo"
+                    scheduling[i]->procesador = 1; // el procesador cambia a 1
+                    procesador1 = 1; // el procesador1 está ocupado
+                }
+                else if (procesador2 == 0) {
+                    strcpy(scheduling[i]->estado, "Corriendo");
+                    scheduling[i]->procesador = 2; // el procesador cambia a 2
+                    procesador2 = 1; // el procesador está ocupado
+                }
+            } 
+             
+        }
+    }
+
 }
