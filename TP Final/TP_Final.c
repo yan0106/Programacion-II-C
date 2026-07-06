@@ -51,6 +51,12 @@ int main () {
     // mostrarScheduler() para verlos en pantalla
     mostrarScheduler();
 
+    // prueba asignaEstado()
+    strcpy(scheduling[0]->estado, "Listo");
+    asignaEstado(scheduling[0]);
+    printf ("Luego de llamar a la f asignaEstado: \n");
+    mostrarScheduler();
+
 
 return 0;  
 }
@@ -115,7 +121,7 @@ void mostrarScheduler() {
 void asignaEstado (proceso * p) {
     /*if (strcmp(p->estado, "Nuevo") == 0) {
         strcpy (p->estado, "Listo");
-    }*/ 
+    } VER */ 
     if (strcmp(p->estado, "Listo") == 0) {
         strcpy (p->estado, "Esperando");
     } else if (strcmp(p->estado, "Esperando") == 0) {
