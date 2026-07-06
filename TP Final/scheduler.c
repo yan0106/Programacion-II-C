@@ -143,7 +143,7 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
     int minimo_prioridad = 9999; // para guardar la prioridad de los procesos "Esperando"
     int indice = -1; // para saber el casillero
 
-    // 1. Chequeo quién ya está corriendo + prioridad minima de los "Esperando":
+    // 1. Chequeo quién ya está corriendo + valor minimo de prioridad de los "Esperando":
     for (int i = 0; i < MAX_PROCESOS; i++){
         if (scheduling[i] != NULL) {
             if (strcmp(scheduling[i]->estado, "Corriendo") == 0){
