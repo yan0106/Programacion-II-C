@@ -3,7 +3,7 @@
 #include <string.h> // para usar strcpy
 #include <time.h> // para usar time
 #define MAX_PROCESOS 10 // capacidad máxima de procesos
-#define TAM_ESTADO 10 // tamaño máximo del string para estado
+#define TAM_ESTADO 10 // tamaño máximo del string para el estado
 
 // -- Variable global --
 static int id = 0; // para incrementar la prioridad
@@ -90,7 +90,7 @@ void ingresaProceso() {
             };
         };
     };
-    // Si salí del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
+    // Si sale del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
     if (ingresado == 0) {
         printf ("No es posible ingresar el proceso. Scheduler lleno.\n");
     };
@@ -105,10 +105,22 @@ void mostrarScheduler() {
                     scheduling[i]->procesador, 
                     scheduling[i]->id_proceso, 
                     scheduling[i]->prioridad, 
-                    scheduling[i]->estado); // 
+                    scheduling[i]->estado);
         } else { // si está vacía
             printf("[%d] -> [Vacio]\n", i);
         }
     }
 };
 
+void asignaEstado (proceso * p) {
+    /*if (strcmp(p->estado, "Nuevo") == 0) {
+        strcpy (p->estado, "Listo");
+    }*/ 
+    if (strcmp(p->estado, "Listo") == 0) {
+        strcpy (p->estado, "Esperando");
+    } else if (strcmp(p->estado, "Esperando") == 0) {
+        strcpy (p->estado, "Listo"); // vuelve a la fila
+    } else if (strcmp(p->estado, "Corriendo") == 0) {
+        strcpy (p->estado, "Terminado");
+    }
+}
