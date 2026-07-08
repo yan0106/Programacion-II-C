@@ -88,24 +88,33 @@ void ingresaProceso() {
     int ingresado = 0; // bandera
     
     for (int i = 0; i < MAX_PROCESOS; i++) {
-        if (scheduling[posicion_actual] == NULL) {
-            //1. Si la posición es vacía, reserva memoria para el proceso
+        if (scheduling[posicion_actual] == NULL) { // Si la posición es vacía
+
+            // 1. Reserva memoria para el proceso
             scheduling[posicion_actual] = malloc(sizeof(struct proceso));
-            //2. Asigna datos
+            if (scheduling[posicion_actual] == NULL) {
+                printf ("No se pudo reservar memoria");
+            }
+
+            // 2. Asigna datos
             scheduling[posicion_actual]->procesador = 0;
             scheduling[posicion_actual]->id_proceso = rand();
             id++; // (primero incrementa, pasa 1 la primera vez)
             scheduling[posicion_actual]->prioridad = id;
             strcpy(scheduling[posicion_actual]->estado, "Nuevo");            
-            //3. Incrementa la posición
+            
+            // 3. Incrementa la posición
             posicion_actual++;
-            //4. Chequea que no se pase de MAX
+            
+            // 4. Chequea que no se pase de MAX
             if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0; // si posicion_actual llega a MAX, pega la vuelta a 0
             };
-            //5. Asigna 1 a la bandera
+            
+            // 5. Asigna 1 a la bandera
             ingresado = 1;
-            //6. Frena el bucle
+            
+            // 6. Frena el bucle
             break;
         } else {
             // si el casillero actual está ocupado, también avanza la posicion_actual para que en la 
@@ -202,7 +211,7 @@ void recorreCola () {
                 scheduling[i]->procesador = 2;
                 proc2_libre = 0; // actualiza el procesador2 a ocupado
             } else {
-                // si no hay procesadores libres, van a hacer la fila
+                // si no hay procesadores libres, va a hacer la fila
                 strcpy(scheduling[i]->estado, "Listo");
                 scheduling[i]->procesador = 0;
             }
