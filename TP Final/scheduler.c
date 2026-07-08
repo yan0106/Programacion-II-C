@@ -43,26 +43,35 @@ int main () {
 
     // al principio el arreglo está vacío (todo en NULL)
     
-    // prueba ingresaProceso()
-    ingresaProceso(); // se guarda en scheduling[0]
-    ingresaProceso(); // se guarda en scheduling[1]
-    ingresaProceso(); // se guarda en scheduling[2]
-
-    // mostrarScheduler() para verlos en pantalla
+    // 1. Ingresa 3 procesos (primer estado del PDF)
+    ingresaProceso(); // [0]
+    ingresaProceso(); // [1]
+    ingresaProceso(); // [2]
     mostrarScheduler();
 
-    // llamada a recorreCola
+    // 2. Primera llamada a recorreCola()
     recorreCola();
-    printf ("Luego de recorrer la cola: \n");
+    printf("-- recorreCola() 1ra vez --\n");
     mostrarScheduler();
 
-    // simula terminarProceso()
-    scheduling[0] = NULL;
-    scheduling[1] = NULL;
+    // 3. Ingresan 2 procesos más
+    ingresaProceso(); // [3]
+    ingresaProceso(); // [4]
+    mostrarScheduler();
 
+    // 4. Segunda llamada a recorreCola()
     recorreCola();
+    printf("-- recorreCola() 2da vez --\n");
     mostrarScheduler();
 
+    // 5. Se quitan los terminados (interino, hasta tener terminaProceso())
+    free(scheduling[0]); scheduling[0] = NULL;
+    free(scheduling[1]); scheduling[1] = NULL;
+
+    // 6. Tercera llamada a recorreCola()
+    recorreCola();
+    printf("-- recorreCola() 3ra vez --\n");
+    mostrarScheduler();
 
 return 0;  
 }
@@ -199,10 +208,31 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
                 }
             // Se excluyen tanto al indice recién promovido (por su posición, sin importar su nuevo estado) 
             // como a los "Esperando" que no fueron promovidos (por su estado).
-            // Los proc. "Esperando" no pierden su prioridad, la vuelta que sigue
+            // Así el recién promovido queda protegido este ciclo (por índice), 
+            // y los "Esperando" que quedaron esperando no rebotan (por estado).
             } else if (i != indice && strcmp(scheduling[i]->estado, "Esperando") != 0) {
                 asignaEstado(scheduling[i]);
             }
         }
     }
+}
+
+// -- Funciones Auxiliares --
+
+// Busca si hay algún procesador libre. Devuelve 1 o 2 si encuentra uno libre, 0 si ambos están ocupados.
+int procesadorLibre() {
+    int procesador1 = 0; // 0 = libre ; 1 = ocupado
+    int procesador2 = 0;
+    for (int i = 0; i < MAX_PROCESOS; i++) {
+        if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Corriendo") == 0) {
+            if (scheduling[i]->procesador == 1){
+                procesador1 = 1;
+            } else if (scheduling[i]->procesador == 2){
+                procesador2 = 1;
+            }
+        }
+    }
+    if (procesador1 == 0) return 1;
+    if (procesador2 == 0) return 2;
+    return 0; // ninguno libre
 }
