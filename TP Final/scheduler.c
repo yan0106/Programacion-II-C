@@ -148,72 +148,32 @@ void asignaEstado (proceso * p) { // se encarga de los procesos que no dependen 
     }
 }
 
-// Nuevo -> Corriendo ; Esperando -> Corriendo
-void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesadores
-    int procesador1 = 0; // 0 = libre ; 1 = ocupado
-    int procesador2 = 0;
+// Esperando -> Corriendo ; 
+void recorreCola () {
+    // 1. Avanza el "Esperando" de mayor prioridad si hay procesador libre
+    int indice = buscarEsperandoPrioridad();
+    int procesador = 0;
 
-    int minimo_prioridad = 9999; // para guardar la prioridad de los procesos "Esperando"
-    int indice = -1; // para saber el casillero
-
-    // 1. Chequeo quién ya está corriendo + valor minimo de prioridad de los "Esperando":
-    for (int i = 0; i < MAX_PROCESOS; i++){
-        if (scheduling[i] != NULL) {
-            if (strcmp(scheduling[i]->estado, "Corriendo") == 0){
-                if (scheduling[i]->procesador == 1) { // si el proceso está corriendo, tiene asignado el procesador1
-                    procesador1 = 1; // el procesador 1 está ocupado
-                } else if (scheduling[i]->procesador == 2) { // si el proceso está corr, si tiene asignado el procesador2
-                    procesador2 = 1; // el procesador 2 está ocupado
-                }
-            }
-            if (strcmp(scheduling[i]->estado, "Esperando") == 0){
-                if (scheduling[i]->prioridad < minimo_prioridad){
-                    minimo_prioridad = scheduling[i]->prioridad;
-                    indice = i; // cuando termina el bucle, se queda con la posición del proc. de mayor prioridad
-                }
-            }
-        }
-    }
-
-    // 2. Lógica para procesos "Esperando"
-    // si indice es distinto de -1, significa que encontró un proc. "Esperando"
-    if (indice != -1) {
-        if (procesador1 == 0){ // si el procesador 1 está libre
-            strcpy(scheduling[indice]->estado, "Corriendo"); // cambia el estado
-            scheduling[indice]->procesador = 1; // le asigna 1 al procesador
-            procesador1 = 1; // cambia a procesador ocupado
-        }
-        else if (procesador2 == 0){
+    if (indice != -1) { // si encontró un Esperando
+        procesador = procesadorLibre();
+        if (procesador != 0) { // si el procesador está libre
             strcpy(scheduling[indice]->estado, "Corriendo");
-            scheduling[indice]->procesador = 2;
-            procesador2 = 1;
-        }        
+            scheduling[indice]->procesador = procesador;
+        }
     }
-    
-    // 3. Recorrido para "Nuevo" (procesador1 = libre; procesador2 = libre; o todo lleno)
+
+    // 2. Recorrido para "Nuevo" y el resto de los estados
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) {
             if (strcmp(scheduling[i]->estado, "Nuevo") == 0 && scheduling[i]->procesador == 0) {
-                if (procesador1 == 0) { // si el procesador1 está libre
-                    strcpy(scheduling[i]->estado, "Corriendo"); // el proceso pasa de "Nuevo" a "Corriendo"
-                    scheduling[i]->procesador = 1; // el procesador cambia a 1
-                    procesador1 = 1; // el procesador1 está ocupado
-                }
-                else if (procesador2 == 0) {
+                int procesadorNuevo = procesadorLibre();
+                if (procesadorNuevo != 0) {
                     strcpy(scheduling[i]->estado, "Corriendo");
-                    scheduling[i]->procesador = 2; // el procesador cambia a 2
-                    procesador2 = 1; // el procesador está ocupado
-                }
-                else {
-                    // si ninguno de los procesadores está libre, el proceso "Nuevo" pasa al estado "Listo"
+                    scheduling[i]->procesador = procesadorNuevo;
+                } else {
                     strcpy(scheduling[i]->estado, "Listo");
-                    // este proceso no está usando ningun procesador. Está afuera, esperando su turno en la fila
-                    scheduling[i]->procesador = 0; 
+                    scheduling[i]->procesador = 0;
                 }
-            // Se excluyen tanto al indice recién promovido (por su posición, sin importar su nuevo estado) 
-            // como a los "Esperando" que no fueron promovidos (por su estado).
-            // Así el recién promovido queda protegido este ciclo (por índice), 
-            // y los "Esperando" que quedaron esperando no rebotan (por estado).
             } else if (i != indice && strcmp(scheduling[i]->estado, "Esperando") != 0) {
                 asignaEstado(scheduling[i]);
             }
@@ -237,8 +197,10 @@ int procesadorLibre() {
             }
         }
     }
+
     if (procesador1 == 0) return 1;
     if (procesador2 == 0) return 2;
+
 return 0; // ninguno libre
 }
 
@@ -255,5 +217,6 @@ int buscarPrioridadEsperando() {
             }
         }
     }
+    
 return indice;
 }
