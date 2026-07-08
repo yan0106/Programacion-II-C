@@ -35,6 +35,10 @@ void mostrarScheduler();
 // Lista los procesos registrados en el archivo
 void listarFile();
 
+int procesadorLibre();
+int buscarPrioridadEsperando();
+
+
 // -- Main --
 
 int main () {
@@ -223,6 +227,7 @@ void recorreCola () { // realiza el trabajo "inteligente" de asignar los procesa
 int procesadorLibre() {
     int procesador1 = 0; // 0 = libre ; 1 = ocupado
     int procesador2 = 0;
+
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Corriendo") == 0) {
             if (scheduling[i]->procesador == 1){
@@ -234,5 +239,21 @@ int procesadorLibre() {
     }
     if (procesador1 == 0) return 1;
     if (procesador2 == 0) return 2;
-    return 0; // ninguno libre
+return 0; // ninguno libre
+}
+
+// Busca el proceso "Esperando" con mayor prioridad (número más bajo). Devuelve su índice, o -1 si no hay ninguno.
+int buscarPrioridadEsperando() {
+    int minimo_prioridad = 9999;
+    int indice = -1;
+
+    for (int i = 0; i < MAX_PROCESOS; i++) {
+        if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Esperando") == 0) {
+            if (scheduling[i]->prioridad < minimo_prioridad) {
+                minimo_prioridad = scheduling[i]->prioridad;
+                indice = i;
+            }
+        }
+    }
+return indice;
 }
