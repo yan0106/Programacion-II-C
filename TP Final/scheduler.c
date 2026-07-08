@@ -94,6 +94,7 @@ void ingresaProceso() {
             scheduling[posicion_actual] = malloc(sizeof(struct proceso));
             if (scheduling[posicion_actual] == NULL) {
                 printf ("No se pudo reservar memoria");
+                return;
             }
 
             // 2. Asigna datos
@@ -116,6 +117,7 @@ void ingresaProceso() {
             
             // 6. Frena el bucle
             break;
+            
         } else {
             // si el casillero actual está ocupado, también avanza la posicion_actual para que en la 
             // próxima vuelta del for, revise el que sigue
