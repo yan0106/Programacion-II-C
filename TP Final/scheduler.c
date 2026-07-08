@@ -117,7 +117,7 @@ void ingresaProceso() {
             
             // 6. Frena el bucle
             break;
-            
+
         } else {
             // si el casillero actual está ocupado, también avanza la posicion_actual para que en la 
             // próxima vuelta del for, revise el que sigue
@@ -180,7 +180,7 @@ void recorreCola () {
         int indice = buscarPrioridadEsperando();
         
         if (indice == -1) {
-            break; // no hay más procesos "Esperando"
+            break; // no hay procesos "Esperando"
         }
 
         if (proc1_libre == 1) { 
@@ -201,7 +201,7 @@ void recorreCola () {
         }
     }
 
-    // 4. Nuevo -> Corriendo o Nuevo -> Listo
+    // 4. Nuevo -> Corriendo || Nuevo -> Listo
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Nuevo") == 0) {
             if (proc1_libre == 1) { // si el procesador1 está libre
@@ -233,7 +233,7 @@ int estadoProcesador(int nro_procesador) {
             }
         }
     }
-    return 1; // terminó de buscar y nadie lo está usando, devuelve 1 (libre)
+return 1; // terminó de buscar y nadie lo está usando, devuelve 1 (libre)
 }
 
 // Busca el proceso "Esperando" con mayor prioridad (número más bajo). Devuelve su índice, o -1 si no hay ninguno.
@@ -249,6 +249,9 @@ int buscarPrioridadEsperando() {
             }
         }
     }
-
 return indice;
+}
+
+int terminaProceso() {
+
 }
