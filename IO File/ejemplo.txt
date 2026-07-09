@@ -1,0 +1,10 @@
+Este es un archivo
+    que tiene
+multiples lineas
+    con identaciones
+y varias lineas en blanco
+
+
+
+una muy larga linea que  getline() deberá tener que realocar en el buffer line si el largo de la linea realmente es muy grande para el buffer que se ha dado,
+con respecto a la puntuación del fin de linea.

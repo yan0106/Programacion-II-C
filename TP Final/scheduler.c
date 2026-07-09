@@ -150,7 +150,6 @@ void mostrarScheduler() {
     }
 };
 
-
 void asignaEstado (proceso * p) { // se encarga de los procesos que no dependen de los procesadores
     // Listo -> Esperando
     if (strcmp(p->estado, "Listo") == 0) {
@@ -254,4 +253,6 @@ return indice;
 
 int terminaProceso() {
 
+
+    
 }

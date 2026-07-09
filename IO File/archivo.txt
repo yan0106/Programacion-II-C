@@ -1,0 +1,4 @@
+Esto es solo
+un archivo de prueba
+para usar con fscanf()
+palabramuylargaynosevaaleercompleta
