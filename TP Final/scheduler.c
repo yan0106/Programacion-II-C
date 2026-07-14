@@ -254,7 +254,7 @@ return indice;
 int terminaProceso() {
     int posicion_liberada = -1;
 
-    FILE *fp = fopen("archivo_terminados.txt", "a");
+    FILE *fp = fopen("archivo_terminados.txt", "a"); // para abrir archivo y agregar datos al final
     
     if (fp == NULL) {
         printf ("Error al abrir el archivo");
@@ -268,13 +268,13 @@ int terminaProceso() {
                     scheduling[i]->id_proceso,
                     scheduling[i]->prioridad,
                     scheduling[i]->estado);
-            free (scheduling[i]);
-            scheduling[i] = NULL;
+            free (scheduling[i]); // libera espacio de memoria
+            scheduling[i] = NULL; // pone el puntero en null
             posicion_liberada = i;
             break; // solo quita 1 por llamada
         }
     }
 
-fclose (fp);
+fclose (fp); // cierra el archivo
 return posicion_liberada;    
 }
