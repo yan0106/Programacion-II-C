@@ -47,7 +47,7 @@ void mostrarMenu();
 
 // -- Main --
 
-int main () {
+int main() {
 
     srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
 
@@ -110,7 +110,7 @@ void ingresaProceso() {
             // 1. Reserva memoria para el proceso
             scheduling[posicion_actual] = malloc(sizeof(struct proceso));
             if (scheduling[posicion_actual] == NULL) {
-                printf ("No se pudo reservar memoria");
+                printf("No se pudo reservar memoria");
                 return;
             }
 
@@ -127,7 +127,7 @@ void ingresaProceso() {
             // 4. Chequea que no se pase de MAX
             if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0; // si posicion_actual llega a MAX, pega la vuelta a 0
-            };
+            }
             
             // 5. Asigna 1 a la bandera
             ingresado = 1;
@@ -142,13 +142,13 @@ void ingresaProceso() {
             // vuelve a chequear que no se pase de MAX
             if (posicion_actual == MAX_PROCESOS) {
                 posicion_actual = 0;
-            };
-        };
-    };
+            }
+        }
+    }
     // Si sale del for e 'ingresado' sigue en 0, es porque nunca encontró NULL (todo lleno)
     if (ingresado == 0) {
-        printf ("No es posible ingresar el proceso. Scheduler lleno.\n");
-    };
+        printf("No es posible ingresar el proceso. Scheduler lleno.\n");
+    }
 }
 
 void mostrarScheduler() {
@@ -166,7 +166,7 @@ void mostrarScheduler() {
             printf("[%d] -> [Vacio]\n", i);
         }
     }
-};
+}
 
 void asignaEstado (proceso * p) { // se encarga de los procesos que no dependen de los procesadores
     
@@ -280,7 +280,7 @@ int terminaProceso() {
     FILE *fp = fopen("archivo_terminados.txt", "a"); // para abrir archivo y agregar datos al final
     
     if (fp == NULL) {
-        printf ("Error al abrir el archivo");
+        printf("Error al abrir el archivo");
         return -1;
     } 
 
@@ -291,34 +291,34 @@ int terminaProceso() {
                     scheduling[i]->id_proceso,
                     scheduling[i]->prioridad,
                     scheduling[i]->estado);
-            free (scheduling[i]); // libera espacio de memoria
+            free(scheduling[i]); // libera espacio de memoria
             scheduling[i] = NULL; // pone el puntero en null
             posicion_liberada = i;
             break; // solo quita 1 por llamada
         }
     }
 
-fclose (fp); // cierra el archivo
+fclose(fp); // cierra el archivo
 return posicion_liberada;    
 }
 
-void listarFile(){
+void listarFile() {
 
     char buffer[TAM_BUFFER];
     FILE *fp = fopen("archivo_terminados.txt", "r");
 
-    printf("\n--- Contenido del archivo ---\n");
+    printf("\n--- Contenido del archivo ---\n\n");
 
     if (fp == NULL) {
-        printf ("No hay procesos terminados guardados todavia.\n");
+        printf("No hay procesos terminados guardados todavia.\n");
         return;
     }    
 
     while (fgets(buffer, TAM_BUFFER, fp) != NULL) { // mientras que lo que devuelva la f sea distinto de NULL
-        printf ("%s", buffer); // imprime lo que lee
+        printf("%s", buffer); // imprime lo que lee
     }
     
-    fclose (fp);
+    fclose(fp);
 }
 
 void mostrarMenu() {
@@ -336,7 +336,14 @@ void mostrarMenu() {
         printf("0. Salir\n");
         
         printf("\nSeleccione una opcion: ");
-        scanf("%d", &opcion);
+
+        // si scanf no devuelve 1, no pudo leer un número entero
+        if (scanf("%d", &opcion) != 1) {
+            int c;
+            // este bucle barre los caracteres del buffer hasta limpiar el Enter
+            while ((c = fgetc(stdin)) != '\n' && c != EOF);
+            opcion = -1; // le asigna un valor inválido para que el switch caiga en el "default"
+        }
 
         switch(opcion) {
             case 1:
@@ -349,9 +356,9 @@ void mostrarMenu() {
                 int terminado = terminaProceso();                
                 
                 if (terminado == -1) {
-                    printf ("\nNo hay procesos terminados para quitar.\n");
+                    printf("\nNo hay procesos terminados para quitar.\n");
                 } else {
-                    printf ("\nProceso terminado con exito en la posicion [%d]!\n", terminado);
+                    printf("\nProceso terminado con exito en la posicion [%d]!\n", terminado);
                 }
                 break;
             }
@@ -365,7 +372,7 @@ void mostrarMenu() {
                 printf("\nSaliendo del sistema...\n");
                 break;
             default:
-                printf("Opcion invalida.\n");
+                printf("\nOpcion invalida.\n");
         }
     }
 
