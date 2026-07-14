@@ -252,7 +252,25 @@ return indice;
 }
 
 int terminaProceso() {
+    int posicion_liberada = -1;
 
-
+    FILE *fp = fopen("archivo_terminados.txt", "a");
     
+    if (fp == NULL) {
+        printf ("Error al abrir el archivo");
+        return -1;
+    } 
+
+    for (int i = 0; i < MAX_PROCESOS; i++) {
+        if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Terminado") == 0) {
+            fprintf (fp, "");
+            free (scheduling[i]);
+            scheduling[i] = NULL;
+            posicion_liberada = i;
+            break; // solo quita 1 por llamada
+        }
+    }
+
+fclose (fp);
+return posicion_liberada;    
 }
