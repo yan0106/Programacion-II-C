@@ -169,6 +169,7 @@ void mostrarScheduler() {
 };
 
 void asignaEstado (proceso * p) { // se encarga de los procesos que no dependen de los procesadores
+    
     // Listo -> Esperando
     if (strcmp(p->estado, "Listo") == 0) {
         strcpy (p->estado, "Esperando");
@@ -345,7 +346,12 @@ void mostrarMenu() {
                 recorreCola();
                 break;
             case 3:
-                terminaProceso();
+                int terminado = terminaProceso();                
+                if (terminado == -1) {
+                    printf ("\nNo hay procesos terminados para quitar.\n");
+                } else {
+                    printf ("\nProceso liberado con éxito!\n");
+                }
                 break;
             case 4:
                 mostrarScheduler();
