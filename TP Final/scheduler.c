@@ -63,6 +63,7 @@ int main () {
     // 3. Ingresan 2 procesos más
     ingresaProceso(); // [3]
     ingresaProceso(); // [4]
+    printf("-- Ingresan 2 procesos mas --\n");
     mostrarScheduler();
 
     // 4. Segunda llamada a recorreCola()
@@ -80,6 +81,7 @@ int main () {
     mostrarScheduler();
 
     // 7. Mostrar por pantalla
+    printf ("--- Archivo Listado: ---\n");
     listarFile();
 
 return 0;  
