@@ -4,6 +4,7 @@
 #include <time.h> // para usar time
 #define MAX_PROCESOS 10 // capacidad máxima de procesos
 #define TAM_ESTADO 10 // tamaño máximo del string para el estado
+#define TAM_BUFFER 80 // tamaño del arreglo para guardar los datos
 
 // -- Variable global --
 static int id = 0; // para incrementar la prioridad
@@ -287,6 +288,19 @@ return posicion_liberada;
 }
 
 void listarFile(){
-    // continuar 
+
+    char buffer[TAM_BUFFER];
+    FILE *fp = fopen("archivo_terminados.txt", "r");
+
+    if (fp == NULL) {
+        printf ("Error al abrir el archivo");
+        return;
+    }    
+
+    while (fgets(buffer, TAM_BUFFER, fp) != NULL) { // mientras que lo que devuelva la f sea distinto de NULL
+        printf ("%s", buffer); // imprime lo que lee
+    }
+    
+    fclose (fp);
 }
 
