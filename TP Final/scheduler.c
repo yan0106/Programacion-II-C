@@ -84,6 +84,7 @@ return 0;
 // -- Desarrollo de las funciones --
 
 void ingresaProceso() {
+    
     static int posicion_actual = 0; // inicia con posición en 0
     int ingresado = 0; // bandera
     
@@ -135,6 +136,7 @@ void ingresaProceso() {
 }
 
 void mostrarScheduler() {
+    
     printf ("-- Los procesos registrados son: -- \n");
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) { // verifica que la posición no esté vacía
@@ -225,6 +227,7 @@ void recorreCola () {
 // Busca si un procesador en particular (1 o 2) está libre.
 // Devuelve 1 si está libre, o 0 si está ocupado.
 int estadoProcesador(int nro_procesador) {
+    
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Corriendo") == 0) {
             if (scheduling[i]->procesador == nro_procesador) {
@@ -232,11 +235,13 @@ int estadoProcesador(int nro_procesador) {
             }
         }
     }
+
 return 1; // terminó de buscar y nadie lo está usando, devuelve 1 (libre)
 }
 
 // Busca el proceso "Esperando" con mayor prioridad (número más bajo). Devuelve su índice, o -1 si no hay ninguno.
 int buscarPrioridadEsperando() {
+    
     int minimo_prioridad = 9999;
     int indice = -1;
 
@@ -248,10 +253,12 @@ int buscarPrioridadEsperando() {
             }
         }
     }
+
 return indice;
 }
 
 int terminaProceso() {
+    
     int posicion_liberada = -1;
 
     FILE *fp = fopen("archivo_terminados.txt", "a"); // para abrir archivo y agregar datos al final
