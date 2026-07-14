@@ -263,7 +263,11 @@ int terminaProceso() {
 
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL && strcmp(scheduling[i]->estado, "Terminado") == 0) {
-            fprintf (fp, "");
+            fprintf(fp, "Procesador: %d | ID Proceso: %d | Prioridad: %d | Estado: %s\n",
+                    scheduling[i]->procesador,
+                    scheduling[i]->id_proceso,
+                    scheduling[i]->prioridad,
+                    scheduling[i]->estado);
             free (scheduling[i]);
             scheduling[i] = NULL;
             posicion_liberada = i;
