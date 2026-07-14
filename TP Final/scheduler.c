@@ -345,14 +345,16 @@ void mostrarMenu() {
             case 2:
                 recorreCola();
                 break;
-            case 3:
+            case 3: {
                 int terminado = terminaProceso();                
+                
                 if (terminado == -1) {
                     printf ("\nNo hay procesos terminados para quitar.\n");
                 } else {
-                    printf ("\nProceso liberado con éxito!\n");
+                    printf ("\nProceso terminado con exito en la posicion [%d]!\n", terminado);
                 }
                 break;
+            }
             case 4:
                 mostrarScheduler();
                 break;
