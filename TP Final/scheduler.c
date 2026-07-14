@@ -70,8 +70,8 @@ int main () {
     mostrarScheduler();
 
     // 5. Se quitan los terminados
-    free(scheduling[0]); scheduling[0] = NULL;
-    free(scheduling[1]); scheduling[1] = NULL;
+    terminaProceso();
+    terminaProceso();
 
     // 6. Tercera llamada a recorreCola()
     recorreCola();
@@ -285,3 +285,8 @@ int terminaProceso() {
 fclose (fp); // cierra el archivo
 return posicion_liberada;    
 }
+
+void listarFile(){
+    // continuar 
+}
+
