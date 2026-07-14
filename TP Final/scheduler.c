@@ -7,9 +7,11 @@
 #define TAM_BUFFER 100 // tamaño del arreglo para guardar los datos
 
 // -- Variable global --
+
 static int id = 0; // para incrementar la prioridad
 
 // -- Estructura proceso -- 
+
 typedef struct proceso{
     int procesador;
     int id_proceso;
@@ -19,6 +21,7 @@ typedef struct proceso{
 
 // Arreglo estático de 10 posiciones de punteros a estructuras proceso. 
 // Reserva memoria para 10 punteros. Pone los 10 casilleros en NULL.
+
 proceso * scheduling[MAX_PROCESOS] = {NULL};
 
 // --- Prototipo de funciones ---
@@ -36,15 +39,21 @@ void mostrarScheduler();
 // Lista los procesos registrados en el archivo
 void listarFile();
 
-// Funciones Auxiliares
+// --- Funciones auxiliares ---
+
 int estadoProcesador();
 int buscarPrioridadEsperando();
-
+void mostrarMenu();
 
 // -- Main --
 
 int main () {
 
+    srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
+
+    mostrarMenu();
+
+    /*
     srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
 
     // Al principio el arreglo está vacío (todo en NULL)
@@ -83,6 +92,7 @@ int main () {
     // 7. Mostrar por pantalla
     printf ("--- Archivo Listado: ---\n");
     listarFile();
+    */
 
 return 0;  
 }
@@ -143,7 +153,7 @@ void ingresaProceso() {
 
 void mostrarScheduler() {
     
-    printf ("-- Los procesos registrados son: -- \n");
+    printf ("\n-- Los procesos registrados son: -- \n\n");
     for (int i = 0; i < MAX_PROCESOS; i++) {
         if (scheduling[i] != NULL) { // verifica que la posición no esté vacía
             printf("[%d] -> {%d;%d;%d;\"%s\"}\n", 
@@ -230,8 +240,7 @@ void recorreCola () {
 
 // -- Funciones Auxiliares --
 
-// Busca si un procesador en particular (1 o 2) está libre.
-// Devuelve 1 si está libre, o 0 si está ocupado.
+// Busca si un procesador en particular (1 o 2) está libre. Devuelve 1 si está libre, o 0 si está ocupado.
 int estadoProcesador(int nro_procesador) {
     
     for (int i = 0; i < MAX_PROCESOS; i++) {
@@ -297,6 +306,8 @@ void listarFile(){
     char buffer[TAM_BUFFER];
     FILE *fp = fopen("archivo_terminados.txt", "r");
 
+    printf("\n--- Contenido del archivo ---\n");
+
     if (fp == NULL) {
         printf ("No hay procesos terminados guardados todavia.\n");
         return;
@@ -309,3 +320,46 @@ void listarFile(){
     fclose (fp);
 }
 
+void mostrarMenu() {
+    
+    int opcion = -1; // para que ingrese al while
+    
+    while (opcion != 0) {
+        
+        printf("\n--- SISTEMA SCHEDULER ---\n");
+        printf("\n1. Ingresar proceso\n");
+        printf("2. Recorrer cola\n");
+        printf("3. Terminar procesos\n");
+        printf("4. Mostrar Scheduler\n");
+        printf("5. Listar archivo\n");
+        printf("0. Salir\n");
+        
+        printf("\nSeleccione una opcion: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+            case 1:
+                ingresaProceso();
+                break;
+            case 2:
+                recorreCola();
+                break;
+            case 3:
+                terminaProceso();
+                break;
+            case 4:
+                mostrarScheduler();
+                break;
+            case 5:
+                listarFile();
+                break;
+            case 0:
+                printf("\nSaliendo del sistema...\n");
+                break;
+            default:
+                printf("Opcion invalida.\n");
+        }
+    }
+
+    listarFile();
+}

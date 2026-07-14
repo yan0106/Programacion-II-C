@@ -2,3 +2,5 @@ Procesador: 1 | ID Proceso: 24909 | Prioridad: 1 | Estado: Terminado
 Procesador: 2 | ID Proceso: 13617 | Prioridad: 2 | Estado: Terminado
 Procesador: 1 | ID Proceso: 25572 | Prioridad: 1 | Estado: Terminado
 Procesador: 2 | ID Proceso: 88 | Prioridad: 2 | Estado: Terminado
+Procesador: 1 | ID Proceso: 5455 | Prioridad: 1 | Estado: Terminado
+Procesador: 1 | ID Proceso: 7506 | Prioridad: 1 | Estado: Terminado
