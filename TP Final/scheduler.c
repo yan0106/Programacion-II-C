@@ -264,6 +264,7 @@ return posicion_liberada;
 void listarFile() {
 
     char buffer[TAM_BUFFER];
+
     FILE *fp = fopen("archivo_terminados.txt", "r");
 
     printf("\n--- Contenido del archivo ---\n\n");
@@ -340,5 +341,6 @@ void mostrarMenu() {
                 printf("\nOpcion invalida.\n");
         }
     }
+    
     listarFile();
 }
