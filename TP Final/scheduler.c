@@ -368,12 +368,17 @@ void mostrarMenu() {
             case 5:
                 listarFile();
                 break;
-            case 0:
+            case 0: {
+                for (int i = 0; i < MAX_PROCESOS; i++){
+                    if (scheduling[i] != NULL) {
+                        free(scheduling[i]);
+                    }
+                }
                 printf("\nSaliendo del sistema...\n");
                 break;
+            }
             default:
                 printf("\nOpcion invalida.\n");
-        }
     }
 
     listarFile();
