@@ -79,6 +79,9 @@ int main () {
     printf("-- recorreCola() 3ra vez --\n");
     mostrarScheduler();
 
+    // 7. Mostrar por pantalla
+    listarFile();
+
 return 0;  
 }
 
