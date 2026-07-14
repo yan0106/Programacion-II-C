@@ -41,7 +41,7 @@ void listarFile();
 
 // --- Funciones auxiliares ---
 
-int estadoProcesador();
+int estadoProcesador(int nro_procesador);
 int buscarPrioridadEsperando();
 void mostrarMenu();
 
@@ -52,48 +52,7 @@ int main() {
     srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
 
     mostrarMenu();
-
-    /*
-    srand(time(NULL)); // inicia la semilla aleatoria con la hora actual, para tener siempre nros distintos
-
-    // Al principio el arreglo está vacío (todo en NULL)
-    
-    // 1. Ingresa 3 procesos
-    ingresaProceso(); // [0]
-    ingresaProceso(); // [1]
-    ingresaProceso(); // [2]
-    mostrarScheduler();
-
-    // 2. Primera llamada a recorreCola()
-    recorreCola();
-    printf("-- recorreCola() 1ra vez --\n");
-    mostrarScheduler();
-
-    // 3. Ingresan 2 procesos más
-    ingresaProceso(); // [3]
-    ingresaProceso(); // [4]
-    printf("-- Ingresan 2 procesos mas --\n");
-    mostrarScheduler();
-
-    // 4. Segunda llamada a recorreCola()
-    recorreCola();
-    printf("-- recorreCola() 2da vez --\n");
-    mostrarScheduler();
-
-    // 5. Se quitan los terminados
-    terminaProceso();
-    terminaProceso();
-
-    // 6. Tercera llamada a recorreCola()
-    recorreCola();
-    printf("-- recorreCola() 3ra vez --\n");
-    mostrarScheduler();
-
-    // 7. Mostrar por pantalla
-    printf ("--- Archivo Listado: ---\n");
-    listarFile();
-    */
-
+   
 return 0;  
 }
 
@@ -379,7 +338,7 @@ void mostrarMenu() {
             }
             default:
                 printf("\nOpcion invalida.\n");
+        }
     }
-
     listarFile();
 }
