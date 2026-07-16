@@ -332,6 +332,7 @@ void mostrarMenu() {
                 for (int i = 0; i < MAX_PROCESOS; i++){
                     if (scheduling[i] != NULL) {
                         free(scheduling[i]);
+                        scheduling[i] = NULL;
                     }
                 }
                 printf("\nSaliendo del sistema...\n");
