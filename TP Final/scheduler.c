@@ -329,7 +329,7 @@ void mostrarMenu() {
                 listarFile();
                 break;
             case 0: {
-                // libera toda la memoria pendiente antes de terminar el programa y pone los punteros en NULL
+                // libera toda la memoria antes de terminar el programa y pone los punteros en NULL
                 for (int i = 0; i < MAX_PROCESOS; i++){
                     if (scheduling[i] != NULL) {
                         free(scheduling[i]);
